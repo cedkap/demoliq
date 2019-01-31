@@ -29,8 +29,23 @@
                     <a class="nav-link" href="{{ path('question_list') }}">Voter</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('fonctionnement') }}">Débatre</a>
+                    <a class="nav-link" href="{{ path('question_add') }}">Débatre</a>
                 </li>
+
+                    {% if  app.user%}
+                    {{ app.user.email }}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('logout') }}"data-toggle="tooltip" data-original-title="Déconnexion">Deconnexion</a>
+                    </li>
+
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('app_login') }}">inscription</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('app_inscription') }}">connexion</a>
+                        </li>
+                {% endif %}
             </ul>
         </div>
     </nav>
