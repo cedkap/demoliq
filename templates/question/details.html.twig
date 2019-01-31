@@ -1,0 +1,38 @@
+{#template/default/fonctionnement.html.twig#}
+
+{% extends 'base.html.twig' %}
+{% block content %}
+    <h2>{{ question.title}}</h2>
+    <div>{{ question.description}}</div>
+    <h2>Sujet</h2>
+
+    <div>{{ question.Sujet|join(' | ') }}</div>
+
+    <br>
+    <h4>Information sur les proposition</h4>
+    <div><a href="{{ path('question_add') }}" class="btn btn-success">Appuyer cette proposition</a> </div>
+
+    <h4>Ajouter une question</h4>
+    {{ form_start(messageFrom) }}
+    {{ form_widget(messageFrom) }}
+    <button class="btn btn-success">Envoyer message</button>
+    {{ form_end(messageFrom) }}
+
+    <h4>les message </h4>
+    <table class="table table-striped">
+        <tr>
+            <th>Question</th>
+        </tr>
+        {# affichage des question ici#}
+        <tr>
+            {% for messages in message%}
+            <td>{{ messages.content|nl2br}}</td>
+        </tr>
+        {% endfor %}
+
+
+    </table>
+
+{% endblock %}
+
+{% block title %} {{ question.title}}{% endblock %}

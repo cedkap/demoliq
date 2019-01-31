@@ -1,0 +1,18 @@
+{#template/default/fonctionnement.html.twig#}
+
+{% extends 'base.html.twig' %}
+{% block content %}
+    <h1>Ajouter une question</h1>
+    {{ form_start(questionFrom) }}
+    {{ form_widget(questionFrom) }}
+    <button class="btn btn-success">Envoyer</button>
+    {{ form_end(questionFrom) }}
+    <br>
+    <br>
+
+
+
+
+{% endblock %}
+
+{% block title %} creation de debat{% endblock %}

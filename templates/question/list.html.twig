@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+{% block content %}
+    <h1>Les question à débattre</h1>
+<table class="table table-striped">
+    <tr>
+        <th>Question</th>
+        <th>Description</th>
+        <th>Nombre de sujet</th>
+        <th>Sujet</th>
+        <th>Actions</th>
+
+    </tr>
+    {# affichage des question ici#}
+    <tr>
+        {% for questions in question %}
+        <td>{{ questions.title}}</td>
+        <td><h6>{{ questions.dateCreated|date('d-m-Y H:i:s')}}</h6></td>
+        <td>{{ questions.messages.count}}</td>
+        <td>{{ questions.Sujet|join(' | ') }}</td>
+        <td><a class="btn btn-primary" href="{{ path('question_detail',{'id':questions.id}) }}">Debattre</a></td>
+    </tr>
+    {% endfor %}
+
+
+</table>
+{% endblock %}
+{% block title %} Demoli{% endblock %}
