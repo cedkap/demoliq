@@ -21,9 +21,11 @@ class QuestionRepository extends ServiceEntityRepository
     }
     public function findListQuestion()
     {
-        $dql= "SELECT q
+        $dql= "SELECT q,s,m
                 FROM App\Entity\Question q
-                where q.status= 'deting' 
+                JOIN q.Sujet s
+                LEFT JOIN q.message m
+                where q.status= :statut 
                  ORDER BY q.id DESC";
         $query = $this->getEntityManager()->createQuery($dql);
         $query->setMaxResults(200);

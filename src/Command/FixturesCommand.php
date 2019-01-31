@@ -2,10 +2,13 @@
 
 namespace App\Command;
 
+use App\Entity\Message;
 use App\Entity\Question;
 use App\Entity\Sujet;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+
+use mysql_xdevapi\Exception;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -38,10 +41,20 @@ class FixturesCommand extends Command
         $io ->text("Coucou");
         $io ->text("Loading ...");
         $faker = \Faker\Factory::create('fr_FR');
+
+        $answer = $io->ask("Truncate all table..sure ? yes |no ","no");
+        if ($answer != "yes"){
+           $io->text("Avboeir");
+           die();
+        }
+
         $conn = $this->em->getConnection();
         $conn->query('SET FOREIGN_KEY_CHECKS = 0');
         $conn->query('TRUNCATE question');
         $conn->query('TRUNCATE sujet');
+        $conn->query('TRUNCATE question_sujet');
+        //
+        $conn->query('SET FOREIGN_KEY_CHECKS = 1');
         $subjects = [
             "Affaires étrangères",
             "Affaires européennes",
@@ -89,6 +102,15 @@ class FixturesCommand extends Command
                 $s = $faker->randomElement($allSubjects);
 
                     $question->addSujet($s);
+
+            }
+            $numMess = mt_rand(1,3);
+            for ($b=0 ;$b<10; $b++){
+                $message = new Message();
+                $message->setContent($faker->realText(200));
+                $message->setClaps(10);
+                $this->setDateCreated(new \DateTime());
+                $this->setIsPublished(1);
 
             }
             $this->em->persist($question);
