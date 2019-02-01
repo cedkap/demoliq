@@ -33,11 +33,14 @@
                 </li>
 
                     {% if  app.user%}
-                    {{ app.user.email }}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('user_list') }}"data-toggle="tooltip" data-original-title="Déconnexion">Mon Compte</a>
+                        </li>
+
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('logout') }}"data-toggle="tooltip" data-original-title="Déconnexion">Deconnexion</a>
                     </li>
-
+                        {{ app.user.email }}
                     {% else %}
                         <li class="nav-item">
                             <a class="nav-link" href="{{ path('app_login') }}">inscription</a>

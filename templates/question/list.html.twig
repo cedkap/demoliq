@@ -13,7 +13,7 @@
     {# affichage des question ici#}
     <tr>
         {% for questions in question %}
-        <td>{{ questions.title}}</td>
+        <td>{{ questions.title}} par :{{ questions.User}}</td>
         <td><h6>{{ questions.dateCreated|date('d-m-Y H:i:s')}}</h6></td>
         <td>{{ questions.messages.count}}</td>
         <td>{{ questions.Sujet|join(' | ') }}</td>

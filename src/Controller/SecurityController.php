@@ -3,6 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\Question;
+use App\Entity\Message;
+use App\Form\QuestionType;
+use App\Form\MessageType;
 use App\Form\RegisterType;
 
 use phpDocumentor\Reflection\DocBlock\Tags\Uses;
@@ -63,5 +67,29 @@ class SecurityController extends AbstractController
     {
         $this->addFlash('success', 'Vous êtes bien déconnecté(e)');
         return $this->redirectToRoute('home');
+    }
+
+
+    // lister les messages de l'utilisateur
+    /**
+     * @Route(
+     *     "/Moncompte",
+     *     name="user_list",
+     *      methods={"GET"}
+     *     )
+     */
+
+    public function list()
+    {
+
+        //Message du l'utilisateur X
+        $UserMessageRepository = $this->getDoctrine()->getRepository(User::class);
+        $userMessage = $UserMessageRepository->findListQuestion();
+        /*$userMessage = $UserMessageRepository->findBy(
+            ['id' => 'DESC'],// order by
+            1000,//limit
+            0
+        );*/
+        return $this->render('security/moncompte.html.twig',['userMessage'=>$userMessage]);
     }
 }

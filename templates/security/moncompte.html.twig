@@ -1,0 +1,31 @@
+{#template/default/fonctionnement.html.twig#}
+
+{% extends 'base.html.twig' %}
+{% block content %}
+<h3>mes ffffff</h3>
+    <table class="table table-striped">
+        <tr>
+            <th>Question</th>
+            <th>Description</th>
+            <th>Nombre de sujet</th>
+            <th>Sujet</th>
+            <th>Actions</th>
+
+        </tr>
+        {# affichage des question ici#}
+        <tr>
+            {% for userMessages in userMessage %}
+
+
+
+        </tr>
+        {% endfor %}
+
+
+    </table>
+
+
+
+{% endblock %}
+
+{% block title %} creation de debat{% endblock %}

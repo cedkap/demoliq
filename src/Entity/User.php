@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -17,6 +19,11 @@ use Symfony\Component\Validator\Constraints as Assert;
 class User implements UserInterface
 {
 
+    public function __toString()
+    {
+        /*utilisé */
+        return $this->getNom();
+    }
 
     /**
      * @ORM\PrePersist()
@@ -61,6 +68,22 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=15)
      */
     private $socialSecurityNumber;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Question", mappedBy="User")
+     */
+    private $user;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Message", mappedBy="User")
+     */
+    private $messages;
+
+    public function __construct()
+    {
+        $this->user = new ArrayCollection();
+        $this->messages = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -160,6 +183,68 @@ class User implements UserInterface
     public function setSocialSecurityNumber(string $socialSecurityNumber): self
     {
         $this->socialSecurityNumber = $socialSecurityNumber;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Question[]
+     */
+    public function getUser(): Collection
+    {
+        return $this->user;
+    }
+
+    public function addUser(Question $user): self
+    {
+        if (!$this->user->contains($user)) {
+            $this->user[] = $user;
+            $user->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(Question $user): self
+    {
+        if ($this->user->contains($user)) {
+            $this->user->removeElement($user);
+            // set the owning side to null (unless already changed)
+            if ($user->getUser() === $this) {
+                $user->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Message[]
+     */
+    public function getMessages(): Collection
+    {
+        return $this->messages;
+    }
+
+    public function addMessage(Message $message): self
+    {
+        if (!$this->messages->contains($message)) {
+            $this->messages[] = $message;
+            $message->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMessage(Message $message): self
+    {
+        if ($this->messages->contains($message)) {
+            $this->messages->removeElement($message);
+            // set the owning side to null (unless already changed)
+            if ($message->getUser() === $this) {
+                $message->setUser(null);
+            }
+        }
 
         return $this;
     }

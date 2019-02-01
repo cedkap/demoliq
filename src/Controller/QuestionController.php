@@ -62,6 +62,8 @@ class QuestionController extends AbstractController
         $message =  new Message();
         //creation de l'association
         $message->setQuestion($question);
+        //relation avec User
+        $message->setUser($this->getUser());
         //creation des formulaire
         $messageForm = $this->createForm(MessageType::class,$message);
         //$questionForm  = $this->createForm(QuestionType::class,$question);
@@ -88,7 +90,14 @@ class QuestionController extends AbstractController
 
     public function create(Request $request)
     {
+        /*if (!$this->isGranted("ROLE_USER")){
+            throw $this->createAccessDeniedException("Degage");
+        }*/
+       // $this->denyAccessUnlessGranted("ROLE_USER");*/
+
         $question = new Question();
+        //Parametre du ID
+        $question->setUser($this->getUser());
         $questionForm  = $this->createForm(QuestionType::class,$question);
         $questionForm->handleRequest($request);
 

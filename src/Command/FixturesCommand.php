@@ -96,6 +96,7 @@ class FixturesCommand extends Command
             $question->setStatus($faker->randomElement(['deting','voting','closed']));
             $question->setDateCreated($faker->dateTimeBetween('-1 year','now'));
             $question->setSupports($faker->optional(0.5,0)->numberBetween(0,47000000));
+          //  $question->setUser(9);
 
             $num = mt_rand(1,3);
             for ($b=0 ;$b<$num; $b++){
