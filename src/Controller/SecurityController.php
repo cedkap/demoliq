@@ -82,14 +82,17 @@ class SecurityController extends AbstractController
     public function list()
     {
 
+        $Userpar =$this->getUser();
+
+        //Question du l'utilisateur X
+        $userQuestionRepository = $this->getDoctrine()->getRepository(User::class);
+        //on recuperer les parametre du de l'utlisateur X
+        $userQuestion = $userQuestionRepository->findListQuestion($Userpar);
+
         //Message du l'utilisateur X
         $UserMessageRepository = $this->getDoctrine()->getRepository(User::class);
-        $userMessage = $UserMessageRepository->findListQuestion();
-        /*$userMessage = $UserMessageRepository->findBy(
-            ['id' => 'DESC'],// order by
-            1000,//limit
-            0
-        );*/
-        return $this->render('security/moncompte.html.twig',['userMessage'=>$userMessage]);
+        $userMessage = $UserMessageRepository->findListMessage($Userpar);
+
+        return $this->render('security/moncompte.html.twig',['userQuestion'=>$userQuestion,'userMessage'=>$userMessage]);
     }
 }

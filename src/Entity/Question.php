@@ -13,6 +13,12 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Question
 {
+
+    public function __toString()
+    {
+        /*utilisé */
+        return $this->getTitle();
+    }
     /**
      * @ORM\PrePersist()
      */

@@ -19,14 +19,29 @@ class UserRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 
-    public function findListQuestion()
+    public function findListQuestion(User $user)
     {
         $dql= "SELECT q,s
                 FROM App\Entity\Question q
                 JOIN q.User s
-                where q.status= :statut 
+                where q.User= :user
                  ORDER BY q.id DESC";
         $query = $this->getEntityManager()->createQuery($dql);
+        $query->setParameter(":user",$user);
+        $query->setMaxResults(200);
+        $question= $query->getResult();
+        return $question;
+    }
+
+    public function findListMessage(User $user)
+    {
+        $dql= "SELECT q,s
+                FROM App\Entity\Message q
+                JOIN q.User s
+                where q.User= :user
+                 ORDER BY q.id DESC";
+        $query = $this->getEntityManager()->createQuery($dql);
+        $query->setParameter(":user",$user);
         $query->setMaxResults(200);
         $question= $query->getResult();
         return $question;

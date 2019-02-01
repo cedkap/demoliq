@@ -11,10 +11,13 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Message
 {
+
+
     /**
      * @ORM\PrePersist()
      */
-    public function prePersist(){
+    public function prePersist()
+    {
         $this->setDateCreated(new \DateTime());
         $this->setClaps(10);
         $this->setIsPublished(1);

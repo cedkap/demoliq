@@ -2,7 +2,7 @@
 
 {% extends 'base.html.twig' %}
 {% block content %}
-<h3>mes ffffff</h3>
+<h3>Mes Questions</h3>
     <table class="table table-striped">
         <tr>
             <th>Question</th>
@@ -14,10 +14,33 @@
         </tr>
         {# affichage des question ici#}
         <tr>
+            {% for userQuestions in userQuestion %}
+            <td>{{ userQuestions.title}}</td>
+            <td><h6>{{ userQuestions.dateCreated|date('d-m-Y H:i:s')}}</h6></td>
+            <td>{{ userQuestions.messages.count}}</td>
+            <td>{{ userQuestions.Sujet|join(' | ') }}</td>
+            <td><a class="btn btn-primary" href="{{ path('question_detail',{'id':userQuestions.id}) }}">Debattre</a></td>
+
+        </tr>
+        {% endfor %}
+
+
+    </table>
+    <h3>Mes Reponses</h3>
+    <table class="table table-striped">
+        <tr>
+            <th>Message</th>
+            <th>Question</th>
+            <th>Date</th>
+
+
+        </tr>
+        {# affichage des question ici#}
+        <tr>
             {% for userMessages in userMessage %}
-
-
-
+            <td>{{ userMessages.content}} </td>
+            <td>{{ userMessages.question|nl2br}} </td>
+            <td><h6>{{ userMessages.dateCreated|date('d-m-Y H:i:s')}}</h6></td>
         </tr>
         {% endfor %}
 
